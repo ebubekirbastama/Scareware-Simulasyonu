@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Scareware Simülasyonu - Eğitim</title>
+    <style>
+        /* Genel Stil Ayarları */
+        body {
+            background: url('https://ebubekirbastama.com.tr/circles.webp');
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Ana konteyner */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 20px;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        /* Başlık */
+        h1 {
+            font-size: 2em;
+            color: #ff6347;
+        }
+
+        /* Youtube simgesi */
+        .youtube-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            width: 80%;
+            max-width: 300px;
+            height: 170px;
+            background: #000;
+            border-radius: 8px;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .youtube-container img {
+            width: 80%;
+        }
+
+        /* Kırık ekran simülasyonu */
+        .broken-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.pinimg.com/736x/11/f8/e1/11f8e16ab362a9a90a250d47d187e570.jpg') center/cover no-repeat;
+            z-index: 1000;
+        }
+
+        /* Sahte tarama ekranı */
+        .fake-scan {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: #0f0;
+            font-family: monospace;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: left;
+            overflow-y: scroll;
+        }
+
+        .fake-scan h1 {
+            color: red;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .scan-log {
+            margin-top: 20px;
+        }
+
+        .scan-log p {
+            font-size: 1.1em;
+        }
+
+        .fake-scan button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            border: none;
+            color: #fff;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Responsive tasarım */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .youtube-container {
+                width: 90%;
+                height: auto;
+            }
+
+            .fake-scan h1 {
+                font-size: 1.8em;
+            }
+
+            .scan-log p {
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .youtube-container {
+                width: 100%;
+                height: 120px;
+            }
+
+            .fake-scan h1 {
+                font-size: 1.5em;
+            }
+
+            .scan-log p {
+                font-size: 0.9em;
+            }
+
+            .fake-scan button {
+                font-size: 1em;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scareware Simülasyonu - Eğitim</h1>
+        <p>Bu sayfa, sahte bir virüs taraması simülasyonu yapmaktadır. Gerçek bir tehdit içermez ve yalnızca eğitim amaçlıdır.</p>
+        
+        <div class="youtube-container" onclick="startSimulation()">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_play_button_icon_%282013%E2%80%932017%29.svg/1200px-YouTube_play_button_icon_%282013%E2%80%932017%29.svg.png" alt="YouTube Play">
+        </div>
+
+        <div class="broken-screen" id="brokenScreen"></div>
+
+        <div class="fake-scan" id="fakeScan">
+            <h1>Virüs Uyarısı!</h1>
+            <p>Cihazınızda zararlı yazılım tespit edildi. Taramaya başlıyoruz...</p>
+            <div class="scan-log" id="scanLog"></div>
+        </div>
+    </div>
+
+<script>
+    history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, window.location.href);
+    });
+    if (!/Android/i.test(navigator.userAgent)) {
+        window.location.href = "https://www.google.com"; // Alternatif bir yönlendirme
+    }
+
+    let fakeScanLogs = [
+        "C:/Android/system32/dangerous_file.apk",
+        "C:/Android/cache/malware.log",
+        "C:/Android/system/unauthorized_access.tmp",
+        "C:/Android/data/com.example.app/cache/virus_found.txt",
+        "C:/Android/system/user_data/malicious_config.xml",
+        "C:/Android/storage/emulated/0/Downloads/evil_app.apk",
+        "C:/Android/data/com.android.system/logs/security_error.txt",
+    ];
+
+    function startSimulation() {
+        document.querySelector('.youtube-container').style.display = 'none';
+
+        // Kırık ekran simülasyonu
+        const brokenScreen = document.getElementById('brokenScreen');
+        brokenScreen.style.display = 'block';
+        brokenScreen.requestFullscreen();
+
+        // Kırık ekran görüntüsünde 3 saniye bekle
+        setTimeout(() => {
+            brokenScreen.style.display = 'none';
+            startFakeScan();
+        }, 5000); // 3 saniye bekleme süresi
+    }
+
+    function startFakeScan() {
+        const fakeScan = document.getElementById('fakeScan');
+        fakeScan.style.display = 'block';
+
+        let logIndex = 0;
+        const logInterval = setInterval(() => {
+            if (logIndex < fakeScanLogs.length) {
+                const log = document.createElement('p');
+                log.textContent = fakeScanLogs[logIndex];
+                document.getElementById('scanLog').appendChild(log);
+                logIndex++;
+            } else {
+                clearInterval(logInterval);
+                // Tarama tamamlandıktan sonra yönlendirme başlat
+                setTimeout(() => {
+                    window.location.href = 'https://www.ebubekirbastama.com';
+                }, 3000); // 3 saniye bekleme
+            }
+        }, 1000);
+
+        // ESC tuşu kontrolü
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                const escMessage = document.createElement('p');
+                escMessage.textContent = "Tarama devam ediyor...";
+                escMessage.style.color = 'yellow';
+                escMessage.style.fontSize = '1.2em';
+                escMessage.style.marginTop = '20px';
+                document.getElementById('scanLog').appendChild(escMessage);
+            }
+        });
+    }
+
+    function redirect() {
+        window.location.href = 'https://www.ebubekirbastama.com';
+    }
+</script>
+
+
+</body>
+</html>
